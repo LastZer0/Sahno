@@ -1,0 +1,5 @@
+# The payment provider redirects a browser without a Supabase JWT.
+# Authority remains untrusted until server-to-server verification succeeds.
+[functions.return-payment]
+verify_jwt = false
+
