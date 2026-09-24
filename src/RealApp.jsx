@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {createClient} from '@supabase/supabase-js';
 import './real.css';
 
-const client=createClient(import.meta.env.VITE_SUPABASE_URL,import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY);
 const money=n=>new Intl.NumberFormat('fa-IR').format(Number(n)/10)+' تومان';
 const date=s=>new Intl.DateTimeFormat('fa-IR',{dateStyle:'long',timeStyle:'short'}).format(new Date(s));
 
 export function RealApp(){
+  // This component only mounts when both public Supabase settings are present.
+  // Do not initialize the client at module load: the standalone demo has no backend.
+  const [client]=useState(()=>createClient(import.meta.env.VITE_SUPABASE_URL,import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY));
   const [user,setUser]=useState(null),[email,setEmail]=useState(''),[events,setEvents]=useState([]),[event,setEvent]=useState(null);
   const [session,setSession]=useState(null),[seats,setSeats]=useState([]),[chosen,setChosen]=useState([]),[orders,setOrders]=useState([]);
   const [notice,setNotice]=useState(''),[busy,setBusy]=useState(false);
