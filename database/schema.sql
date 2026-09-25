@@ -137,7 +137,8 @@ grant select(id,session_id,section_id,seat_label,price_irr,state,hold_expires_at
 grant select on public.profiles, public.organizations, public.organization_members, public.staff_members,
   public.orders, public.order_seats, public.payments, public.tickets to authenticated;
 
-create policy "published event catalog" on public.events for select to anon,authenticated using (
+create policy "published event catalog" on public.events for select to anon using (status='published');
+create policy "authenticated event catalog" on public.events for select to authenticated using (
   status='published' or (select auth.uid()) in
   (select m.user_id from public.organization_members m where m.organization_id=events.organization_id)
 );
