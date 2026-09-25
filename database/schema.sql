@@ -107,6 +107,13 @@ create index on public.event_sessions(event_id,starts_at);
 create index on public.session_seats(session_id,state,hold_expires_at);
 create index on public.orders(buyer_id,created_at desc);
 create index on public.payments(order_id,state);
+create index on public.events(organization_id);
+create index on public.events(venue_id);
+create index on public.order_seats(seat_id);
+create index on public.orders(session_id);
+create index on public.organization_members(user_id);
+create index on public.session_seats(hold_order_id) where hold_order_id is not null;
+create index on public.session_seats(section_id);
 
 -- All public tables have RLS and explicit grants. Writes use server-only functions.
 alter table public.profiles enable row level security;
